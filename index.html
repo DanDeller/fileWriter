@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>writer test</title>
+</head>
+<body>
+	<input id="name" type="text" name="test" placeholder="Your name...">
+	<button id='send'>Send</button>
+
+<script type="text/javascript">
+	var yourName = document.querySelector('#name'),
+			send = document.querySelector('#send');
+			send.addEventListener('click', sendData, false);
+
+	var data = {
+		name: yourName,
+	};
+
+	function sendData() {
+		
+		data.name = yourName.value;
+
+		fetch('/names', {
+			method: 'post',
+			body: JSON.stringify(data),
+			headers: {
+				'Accept': 'application/json',
+	      'Content-Type': 'application/json'
+			}
+		}).then(function() {
+			console.log(data);
+		});
+	}
+
+</script>
+</body>
+</html>
