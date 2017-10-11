@@ -7,6 +7,14 @@ const dataFile = path.join(__dirname, 'data.json');
 
 app.get('/', function(req, res) {
 	res.sendFile(path.join(__dirname, 'index.html'));
+	fs.stat(dataFile, (err, stat) => {
+		if (err) {
+			fs.writeFile(dataFile, JSON.stringify([], null, 4), () => {
+				res.json();
+			});
+			console.log('JSON file created.');
+		}
+	});
 });
 
 app.use(bodyParser.json());
@@ -24,15 +32,6 @@ app.get('/names', (req, res) => {
     res.setHeader('Cache-Control', 'no-cache');
     res.json(JSON.parse(data));
   });
-});
-
-fs.stat(dataFile, (err, stat) => {
-	if (err) {
-		fs.writeFile(dataFile, JSON.stringify([], null, 4), () => {
-			res.json();
-		});
-		console.log('JSON file created.');
-	}
 });
 
 app.post('/names', (req, res) => {
