@@ -28,9 +28,7 @@ app.get('/names', (req, res) => {
 
 fs.stat(dataFile, (err, stat) => {
 	if (err) {
-		fs.writeFile(dataFile, JSON.stringify([], null, 4), () => {
-			res.json();
-		});
+		fs.writeFile(dataFile, JSON.stringify([], null, 4));
 		console.log('JSON file created.');
 	}
 });
